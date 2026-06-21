@@ -3,339 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Happy Birthday Kana ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#130024,#32004f,#5d0091);
-min-height:100vh;
-overflow-x:hidden;
+background:linear-gradient(135deg,#120024,#2b004d,#4a0072);
 color:white;
 text-align:center;
-position:relative;
+overflow-x:hidden;
+min-height:100vh;
 }
 
-/* Stars */
 .stars{
 position:fixed;
-width:100%;
-height:100%;
 top:0;
 left:0;
-overflow:hidden;
-z-index:-2;
-}
-
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-border-radius:50%;
-animation:twinkle 3s infinite;
-}
-
-@keyframes twinkle{
-0%,100%{opacity:0.2;}
-50%{opacity:1;}
-}
-
-/* Floating Hearts */
-
-.heart{
-position:fixed;
-bottom:-50px;
-font-size:20px;
-animation:float 8s linear infinite;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(white 1px, transparent 1px);
+background-size:40px 40px;
+opacity:.3;
 z-index:-1;
 }
 
-@keyframes float{
-0%{
-transform:translateY(0);
-opacity:1;
-}
-100%{
-transform:translateY(-110vh);
-opacity:0;
-}
+#welcome{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:20px;
 }
 
-/* Container */
-
-.container{
-max-width:1000px;
-margin:auto;
-padding:30px;
+#welcome h1{
+font-size:3rem;
+color:#ffd6f5;
+margin-bottom:15px;
 }
 
-/* Main Image */
-
-.main-photo{
-width:280px;
-height:350px;
-object-fit:cover;
-border-radius:25px;
-border:4px solid white;
-box-shadow:0 0 35px #ff99ff;
-transition:.5s;
+#welcome p{
+font-size:1.2rem;
+color:#ddd;
+margin-bottom:30px;
 }
 
-.main-photo:hover{
-transform:scale(1.05);
+#surpriseBtn{
+padding:18px 55px;
+font-size:24px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+background:linear-gradient(45deg,#ff66c4,#c084fc);
+color:white;
+box-shadow:0 0 25px rgba(255,255,255,.6);
 }
 
-/* Message Box */
-
-.message{
-margin-top:25px;
-padding:30px;
-border-radius:25px;
-
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(12px);
-
-box-shadow:
-0 0 20px rgba(255,255,255,0.2),
-0 0 40px rgba(255,0,255,0.2);
-
-line-height:2;
-font-size:18px;
+#birthdayPage{
+display:none;
+padding:20px;
 }
 
-.message h1{
+#birthdayPage h1{
+font-size:3rem;
+margin-top:20px;
 margin-bottom:20px;
 }
 
-/* Gallery */
+.main-photo{
+width:300px;
+height:300px;
+object-fit:cover;
+border-radius:20px;
+border:5px solid white;
+box-shadow:0 0 25px rgba(255,255,255,.8);
+}
+
+.message{
+max-width:700px;
+margin:25px auto;
+padding:20px;
+background:rgba(255,255,255,.15);
+border-radius:20px;
+line-height:1.8;
+font-size:18px;
+}
 
 .gallery{
-margin-top:30px;
 display:flex;
-justify-content:center;
 flex-wrap:wrap;
-gap:15px;
+justify-content:center;
+gap:10px;
+margin-top:20px;
 }
 
 .gallery img{
-width:150px;
-height:110px;
+width:180px;
+height:180px;
 object-fit:cover;
 border-radius:15px;
-cursor:pointer;
 border:3px solid white;
-transition:.4s;
 }
 
-.gallery img:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px white;
+.cake{
+font-size:70px;
+margin:20px 0;
+animation:bounce 1.5s infinite;
 }
 
-/* Button */
-
-.btn{
-margin-top:25px;
-padding:12px 25px;
-border:none;
-border-radius:30px;
-font-size:18px;
-cursor:pointer;
-background:#ff4da6;
-color:white;
-transition:.3s;
-}
-
-.btn:hover{
-transform:scale(1.1);
-}
-
-.footer{
-margin-top:40px;
-font-size:22px;
-}
-
-.glow{
-animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{
-text-shadow:0 0 10px white;
-}
-to{
-text-shadow:0 0 25px pink;
-}
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars" id="stars"></div>
+<div class="stars"></div>
 
-<audio id="music" autoplay loop>
+<audio id="music" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<!-- Welcome Screen -->
+<div id="welcome">
 
-<img id="mainPhoto"
-class="main-photo"
-src="photo1.jpg">
+<h1>🎂 A Little Birthday Surprise 🎂</h1>
+
+<p>Something special is waiting for you ❤️</p>
+
+<button id="surpriseBtn" onclick="showBirthday()">
+🎁 Press Me
+</button>
+
+</div>
+
+<!-- Birthday Screen -->
+<div id="birthdayPage">
+
+<h1>🎉 Happy Birthday Kana ❤️ 🎉</h1>
+
+<div class="cake">🎂</div>
+
+<img src="photo1.jpg" class="main-photo">
 
 <div class="message">
 
-<h1 class="glow">💌 For Kana 💌</h1>
+<h2>💌 For Kana</h2>
 
-<p>
+<br>
+
 Happy Birthday Kana ❤️
-</p>
 
-<br>
+<br><br>
 
-<p>
-May your day be filled with happiness,
-laughter, success and beautiful memories.
-</p>
+May your day be filled with happiness, laughter, success and beautiful memories.
 
-<br>
+<br><br>
 
-<p>
-May all your dreams come true and may this
-year bring you endless joy.
-</p>
+May all your dreams come true and may this year bring you endless joy.
 
-<br>
+<br><br>
 
-<p>
 Thank you for being such a wonderful person.
-</p>
 
-<br>
+<br><br>
 
-<p>
 Keep smiling and shining always ✨
-</p>
+
+<br><br>
+
+With Love ❤️
 
 <br>
 
-<h2>With Love ❤️</h2>
-<h3>Kevin</h3>
+Kevin
 
 </div>
-
-<button class="btn" onclick="showLove()">
-❤️ Click Me ❤️
-</button>
 
 <div class="gallery">
-
-<img src="photo1.jpg" onclick="changePhoto(this.src)">
-<img src="photo2.jpg" onclick="changePhoto(this.src)">
-<img src="photo3.jpg" onclick="changePhoto(this.src)">
-<img src="photo4.jpg" onclick="changePhoto(this.src)">
-<img src="photo5.jpg" onclick="changePhoto(this.src)">
-
-</div>
-
-<div class="footer glow">
-🌹 Forever Grateful For You 🌹
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+<img src="photo4.jpg">
+<img src="photo5.jpg">
 </div>
 
 </div>
 
 <script>
 
-/* Stars */
+function showBirthday(){
 
-for(let i=0;i<200;i++){
+const music = document.getElementById("music");
 
-const star=document.createElement("div");
+music.play()
+.then(() => {
+console.log("Music started");
+})
+.catch(err => {
+console.log("Music blocked", err);
+});
 
-star.className="star";
+document.getElementById("welcome").style.display="none";
+document.getElementById("birthdayPage").style.display="block";
 
-star.style.left=Math.random()*100+"%";
-star.style.top=Math.random()*100+"%";
-
-star.style.animationDelay=
-Math.random()*3+"s";
-
-document.getElementById("stars")
-.appendChild(star);
-}
-
-/* Hearts */
-
-setInterval(()=>{
-
-const heart=document.createElement("div");
-
-heart.className="heart";
-heart.innerHTML="❤️";
-
-heart.style.left=
-Math.random()*100+"vw";
-
-heart.style.fontSize=
-(Math.random()*20+15)+"px";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},8000);
-
-},300);
-
-/* Gallery */
-
-function changePhoto(src){
-document.getElementById("mainPhoto").src=src;
-}
-
-/* Button */
-
-function showLove(){
-
-alert(
-"❤️ Happy Birthday Kana ❤️\n\nYou are amazing and deserve all the happiness in the world! ✨"
-);
-
-}
-
-/* Auto slideshow */
-
-const photos=[
-"photo1.jpg",
-"photo2.jpg",
-"photo3.jpg",
-"photo4.jpg",
-"photo5.jpg"
-];
-
-let current=0;
+confetti({
+particleCount:250,
+spread:120,
+origin:{y:0.6}
+});
 
 setInterval(()=>{
-
-current++;
-
-if(current>=photos.length){
-current=0;
-}
-
-document.getElementById("mainPhoto")
-.src=photos[current];
-
+confetti({
+particleCount:100,
+spread:100,
+origin:{y:0.6}
+});
 },4000);
+
+}
 
 </script>
 
