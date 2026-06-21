@@ -16,11 +16,24 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#17002b,#32004d,#4a0072);
+background:linear-gradient(135deg,#120024,#2b004d,#4a0072);
 color:white;
-overflow-x:hidden;
 text-align:center;
+overflow-x:hidden;
 min-height:100vh;
+}
+
+.stars{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(white 1px, transparent 1px);
+background-size:40px 40px;
+opacity:.3;
+z-index:-1;
 }
 
 #welcome{
@@ -34,33 +47,35 @@ padding:20px;
 
 #welcome h1{
 font-size:3rem;
-margin-bottom:20px;
 color:#ffd6f5;
+margin-bottom:15px;
 }
 
 #welcome p{
 font-size:1.2rem;
+color:#ddd;
 margin-bottom:30px;
 }
 
 #surpriseBtn{
-padding:18px 50px;
-font-size:22px;
+padding:18px 55px;
+font-size:24px;
 border:none;
 border-radius:50px;
 cursor:pointer;
 background:linear-gradient(45deg,#ff66c4,#c084fc);
 color:white;
-box-shadow:0 0 25px rgba(255,255,255,.5);
+box-shadow:0 0 25px rgba(255,255,255,.6);
 }
 
 #birthdayPage{
 display:none;
-padding:30px 15px;
+padding:20px;
 }
 
 #birthdayPage h1{
 font-size:3rem;
+margin-top:20px;
 margin-bottom:20px;
 }
 
@@ -80,6 +95,7 @@ padding:20px;
 background:rgba(255,255,255,.15);
 border-radius:20px;
 line-height:1.8;
+font-size:18px;
 }
 
 .gallery{
@@ -98,17 +114,15 @@ border-radius:15px;
 border:3px solid white;
 }
 
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-background-image:
-radial-gradient(white 1px, transparent 1px);
-background-size:40px 40px;
-opacity:.3;
-z-index:-1;
+.cake{
+font-size:70px;
+margin:20px 0;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
 }
 </style>
 </head>
@@ -121,7 +135,7 @@ z-index:-1;
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- FIRST SCREEN -->
+<!-- Welcome Screen -->
 <div id="welcome">
 
 <h1>🎂 A Little Birthday Surprise 🎂</h1>
@@ -134,10 +148,12 @@ z-index:-1;
 
 </div>
 
-<!-- SECOND SCREEN -->
+<!-- Birthday Screen -->
 <div id="birthdayPage">
 
-<h1>🎂 Happy Birthday Kana ❤️</h1>
+<h1>🎉 Happy Birthday Kana ❤️ 🎉</h1>
+
+<div class="cake">🎂</div>
 
 <img src="photo1.jpg" class="main-photo">
 
@@ -151,16 +167,19 @@ Happy Birthday Kana ❤️
 
 <br><br>
 
-May your day be filled with happiness,
-laughter, success and beautiful memories.
-
-Thank you for being such a wonderful person.
-
-Keep smiling and shining always ✨
+May your day be filled with happiness, laughter, success and beautiful memories.
 
 <br><br>
 
-Wishing you a year full of happiness and success.
+May all your dreams come true and may this year bring you endless joy.
+
+<br><br>
+
+Thank you for being such a wonderful person.
+
+<br><br>
+
+Keep smiling and shining always ✨
 
 <br><br>
 
@@ -173,13 +192,11 @@ Kevin
 </div>
 
 <div class="gallery">
-
 <img src="photo1.jpg">
 <img src="photo2.jpg">
 <img src="photo3.jpg">
 <img src="photo4.jpg">
 <img src="photo5.jpg">
-
 </div>
 
 </div>
@@ -188,15 +205,21 @@ Kevin
 
 function showBirthday(){
 
+const music = document.getElementById("music");
+
+music.play()
+.then(() => {
+console.log("Music started");
+})
+.catch(err => {
+console.log("Music blocked", err);
+});
+
 document.getElementById("welcome").style.display="none";
 document.getElementById("birthdayPage").style.display="block";
 
-const music=document.getElementById("music");
-
-music.play().catch(()=>{});
-
 confetti({
-particleCount:200,
+particleCount:250,
 spread:120,
 origin:{y:0.6}
 });
