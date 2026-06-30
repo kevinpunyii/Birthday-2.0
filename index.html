@@ -359,23 +359,42 @@ You have a way of making everything brighter just by being yourself.
 May all your dreams come true, and may this year bring you endless joy. 
 Keep smiling and shining always ✨
 
-With Love 🫶🏻
+With Love, 
 
-Kevin`;
+🫶🏻Kevin`;
 
 let i = 0;
 
-function typeWriter(){
+// function typeWriter(){
 
-if(i < text.length){
+// if(i < text.length){
 
-document.getElementById("typing").innerHTML += text.charAt(i);
+// document.getElementById("typing").innerHTML += text.charAt(i);
 
-i++;
+// i++;
 
-setTimeout(typeWriter,40);
+// setTimeout(typeWriter,40);
 
-}
+// }
+
+// }
+
+  function typeWriter(){
+
+    if(i < text.length){
+
+        const ch = text.charAt(i);
+
+        if(ch === "\n"){
+            document.getElementById("typing").innerHTML += "<br>";
+        }else{
+            document.getElementById("typing").innerHTML += ch;
+        }
+
+        i++;
+        setTimeout(typeWriter,40);
+
+    }
 
 }
 
