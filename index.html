@@ -119,66 +119,68 @@ animation:float 4s ease-in-out infinite;
 50%{transform:translateY(-15px);}
 }
 
-/* --- ANIMATED CANDLE WITH EMOJI CAKE BASE --- */
+/* --- SMALL ANIMATED CANDLE ATTACHED TO CAKE --- */
 .cake-container {
   position: relative;
   width: 100px;
-  margin: 20px auto 15px auto;
+  margin: 15px auto 20px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .cake-emoji {
-  font-size: 50px;
+  font-size: 55px;
   line-height: 1;
-  margin-top: -5px;
+  margin-top: -8px;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  z-index: 1;
 }
 
+/* Made smaller and perfectly attached to the top of the cake */
 .candle {
-  width: 8px;
-  height: 35px;
-  background: linear-gradient(to right, #e63946, #ffb703, #e63946);
-  border-radius: 2px 2px 0 0;
+  width: 5px;
+  height: 22px;
+  background: linear-gradient(to right, #ff4d00, #ffd700, #ff4d00);
+  border-radius: 1px 1px 0 0;
   position: relative;
-  margin-bottom: -4px; 
+  margin-bottom: -6px; 
   z-index: 2;
 }
 
 .candle::before {
   content: '';
   position: absolute;
-  top: -5px;
+  top: -4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 2px;
-  height: 5px;
-  background: #333;
+  width: 1px;
+  height: 4px;
+  background: #222;
 }
 
+/* Delicate, beautifully proportioned flickering flame */
 .flame {
   position: absolute;
-  top: -30px;
-  width: 14px;
-  height: 24px;
-  background: radial-gradient(circle at 50% 80%, #fff 20%, #ffb703 50%, #ff4d00 80%, transparent);
+  top: -16px;
+  width: 10px;
+  height: 16px;
+  background: radial-gradient(circle at 50% 80%, #fff 20%, #ffb703 60%, #ff4d00 90%, transparent);
   border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
-  box-shadow: 0 0 15px #ffb703, 
-              0 0 30px #ff4d00, 
-              0 0 40px #ff66c4;
-  animation: flicker 0.1s infinite alternate, sway 1.2s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px #ffb703, 
+              0 0 20px #ff4d00;
+  animation: flicker 0.1s infinite alternate, sway 1s ease-in-out infinite alternate;
   z-index: 3;
 }
 
 @keyframes flicker {
-  0% { transform: scale(0.95) rotate(-1deg); opacity: 0.9; }
-  100% { transform: scale(1.05) rotate(1deg) translateY(-1px); opacity: 1; }
+  0% { transform: scale(0.9) rotate(-1deg); opacity: 0.85; }
+  100% { transform: scale(1.1) rotate(1deg); opacity: 1; }
 }
 
 @keyframes sway {
-  0% { margin-left: -2px; }
-  100% { margin-left: 2px; }
+  0% { margin-left: -1px; }
+  100% { margin-left: 1px; }
 }
 
 .message{
@@ -218,7 +220,7 @@ transform:scale(1.08);
 box-shadow:0 0 25px white;
 }
 
-/* --- CLIPPING CONTAINERS FOR GALLERY COUPLING --- */
+/* --- CLIPPING CONTAINERS FOR GALLERY --- */
 .gallery .girl-container {
   width: 45%;
   max-width: 180px;
@@ -230,14 +232,14 @@ box-shadow:0 0 25px white;
   cursor: pointer;
 }
 
-/* PERFECTED CROP: Increased scale to 2.3 and locked origin to the right side to completely cut out the boy */
+/* FIXED VISIBILITY: Perfectly shifts the view to frame the girl beautifully without over-zooming */
 .gallery .girl-container.crop-boy img {
   width: 100%;
   height: 100%;
   border: none;
   border-radius: 0;
-  transform: scale(2.3); 
-  transform-origin: 95% 45%;
+  transform: scale(1.65); 
+  transform-origin: 92% 38%;
 }
 
 /* Tree image magnification zoom */
