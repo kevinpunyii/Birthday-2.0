@@ -80,7 +80,7 @@ display:none;
 padding:20px;
 }
 
-/* --- FIXED TEXT GLOW EFFECT --- */
+/* --- TEXT GLOW EFFECT --- */
 .glow-text {
   font-size: 2.8rem;
   margin: 20px;
@@ -119,57 +119,66 @@ animation:float 4s ease-in-out infinite;
 50%{transform:translateY(-15px);}
 }
 
-/* --- NEW REALISTIC CANDLE SYSTEM (Orange Box Completely Removed) --- */
+/* --- ANIMATED CANDLE WITH EMOJI CAKE BASE --- */
 .cake-container {
   position: relative;
   width: 100px;
-  margin: 30px auto 25px auto;
+  margin: 20px auto 15px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.cake-emoji {
+  font-size: 50px;
+  line-height: 1;
+  margin-top: -5px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
 .candle {
-  width: 12px;
-  height: 50px;
+  width: 8px;
+  height: 35px;
   background: linear-gradient(to right, #e63946, #ffb703, #e63946);
-  border-radius: 4px 4px 0 0;
+  border-radius: 2px 2px 0 0;
   position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: -4px; 
+  z-index: 2;
 }
 
 .candle::before {
   content: '';
   position: absolute;
-  top: -6px;
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
-  height: 6px;
+  height: 5px;
   background: #333;
 }
 
 .flame {
   position: absolute;
-  top: -34px;
-  width: 18px;
-  height: 28px;
-  background: radial-gradient(circle at 50% 80%, #fff 10%, #ffb703 40%, #ff4d00 80%, transparent);
+  top: -30px;
+  width: 14px;
+  height: 24px;
+  background: radial-gradient(circle at 50% 80%, #fff 20%, #ffb703 50%, #ff4d00 80%, transparent);
   border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
-  box-shadow: 0 0 20px #ffb703, 
-              0 0 40px #ff4d00, 
-              -4px -4px 15px rgba(255, 255, 255, 0.5);
-  animation: floatFlame 0.15s infinite alternate, sideSway 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 15px #ffb703, 
+              0 0 30px #ff4d00, 
+              0 0 40px #ff66c4;
+  animation: flicker 0.1s infinite alternate, sway 1.2s ease-in-out infinite alternate;
+  z-index: 3;
 }
 
-@keyframes floatFlame {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1) translateY(-1px); }
+@keyframes flicker {
+  0% { transform: scale(0.95) rotate(-1deg); opacity: 0.9; }
+  100% { transform: scale(1.05) rotate(1deg) translateY(-1px); opacity: 1; }
 }
 
-@keyframes sideSway {
-  0% { margin-left: -1px; transform: rotate(-2deg); }
-  100% { margin-left: 1px; transform: rotate(2deg); }
+@keyframes sway {
+  0% { margin-left: -2px; }
+  100% { margin-left: 2px; }
 }
 
 .message{
@@ -209,7 +218,7 @@ transform:scale(1.08);
 box-shadow:0 0 25px white;
 }
 
-/* --- CONTAINERS TO HIDE THE BOY & ZOOM ON THE GIRL --- */
+/* --- CLIPPING CONTAINERS FOR GALLERY COUPLING --- */
 .gallery .girl-container {
   width: 45%;
   max-width: 180px;
@@ -221,17 +230,17 @@ box-shadow:0 0 25px white;
   cursor: pointer;
 }
 
-/* Zooming and pushing left side completely out of view for photos 7 & 8 */
+/* PERFECTED CROP: Increased scale to 2.3 and locked origin to the right side to completely cut out the boy */
 .gallery .girl-container.crop-boy img {
   width: 100%;
   height: 100%;
   border: none;
   border-radius: 0;
-  transform: scale(1.55); 
-  transform-origin: right center; /* Shifts frame entirely to the right girl */
+  transform: scale(2.3); 
+  transform-origin: 95% 45%;
 }
 
-/* High-magnification zoom for photo 9 (the tree photo) */
+/* Tree image magnification zoom */
 .gallery .girl-container.zoom-tree img {
   width: 100%;
   height: 100%;
@@ -291,6 +300,7 @@ width:46%;
 <div class="cake-container">
   <div class="flame"></div>
   <div class="candle"></div>
+  <div class="cake-emoji">🎂</div>
 </div>
 
 <img src="photo1.jpg" class="main-photo">
