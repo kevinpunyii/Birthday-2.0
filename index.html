@@ -32,6 +32,21 @@ min-height:100vh;
 100%{background-position:0% 50%;}
 }
 
+  @keyframes glow{
+0%{
+text-shadow:
+0 0 10px #ffd700,
+0 0 20px #ff66c4,
+0 0 30px #ffffff;
+}
+100%{
+text-shadow:
+0 0 20px #ffd700,
+0 0 40px #ff66c4,
+0 0 60px #ffffff;
+}
+}
+
 .stars{
 position:fixed;
 top:0;
@@ -107,9 +122,62 @@ animation:float 4s ease-in-out infinite;
 }
 
 .cake{
-font-size:70px;
-margin:20px 0;
-animation:bounce 1.5s infinite;
+width:180px;
+height:90px;
+margin:30px auto;
+background:linear-gradient(#ffb347,#ff7b7b);
+border-radius:10px 10px 20px 20px;
+position:relative;
+box-shadow:0 0 20px rgba(255,180,100,.5);
+}
+
+.cake::before{
+content:"";
+position:absolute;
+top:-12px;
+left:0;
+width:100%;
+height:12px;
+background:#fff;
+border-radius:10px;
+}
+
+.candle{
+position:absolute;
+top:-55px;
+left:50%;
+transform:translateX(-50%);
+width:12px;
+height:55px;
+background:#ffffff;
+border-radius:6px;
+}
+
+.flame{
+position:absolute;
+top:-22px;
+left:50%;
+transform:translateX(-50%);
+width:18px;
+height:28px;
+background:gold;
+border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+box-shadow:
+0 0 15px yellow,
+0 0 30px orange,
+0 0 50px red;
+animation:flicker .15s infinite alternate;
+}
+
+@keyframes flicker{
+0%{
+transform:translateX(-50%) scale(1) rotate(-3deg);
+opacity:1;
+}
+100%{
+transform:translateX(-50%) scale(1.15) rotate(3deg);
+opacity:.85;
+}
 }
 
 @keyframes bounce{
