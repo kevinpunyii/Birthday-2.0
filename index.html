@@ -4,351 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Kana ❤️</title>
-
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:linear-gradient(-45deg,#120024,#4a0072,#7b2cbf,#ff66c4);
-background-size:400% 400%;
-animation:bgMove 12s ease infinite;
-color:white;
-text-align:center;
-overflow-x:hidden;
-min-height:100vh;
-}
-
-@keyframes bgMove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
-
-.stars{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background-image:radial-gradient(white 1px,transparent 1px);
-background-size:40px 40px;
-opacity:.3;
-z-index:-1;
-}
-
-#welcome{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-#welcome h1{
-font-size:2.6rem;
-color:#ffd6f5;
-margin-bottom:25px;
-}
-
-#surpriseBtn{
-padding:18px 55px;
-font-size:24px;
-border:none;
-border-radius:50px;
-cursor:pointer;
-background:linear-gradient(45deg,#ff66c4,#c084fc);
-color:white;
-box-shadow:0 0 25px rgba(255,255,255,.6);
-transition:.3s;
-}
-
-#surpriseBtn:hover{
-transform:scale(1.08);
-}
-
-#birthdayPage{
-display:none;
-padding:20px;
-}
-
-/* --- TEXT GLOW EFFECT --- */
-.glow-text {
-  font-size: 2.8rem;
-  margin: 20px;
-  background: linear-gradient(90deg, #ffd700, #ff66c4, #fff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes textGlow {
-  0% {
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)) 
-            drop-shadow(0 0 15px rgba(255, 102, 196, 0.5));
-  }
-  100% {
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)) 
-            drop-shadow(0 0 35px rgba(255, 102, 196, 0.8));
-  }
-}
-
-.main-photo{
-width:min(80vw,300px);
-height:min(80vw,300px);
-object-fit:cover;
-border-radius:50%;
-border:6px solid white;
-box-shadow:
-0 0 20px #fff,
-0 0 40px #ff66c4,
-0 0 70px #c084fc;
-animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-15px);}
-}
-
-/* --- SMALL ANIMATED CANDLE ATTACHED TO CAKE --- */
-.cake-container {
-  position: relative;
-  width: 100px;
-  margin: 15px auto 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cake-emoji {
-  font-size: 55px;
-  line-height: 1;
-  margin-top: -8px;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-  z-index: 1;
-}
-
-/* Made smaller and perfectly attached to the top of the cake */
-.candle {
-  width: 5px;
-  height: 22px;
-  background: linear-gradient(to right, #ff4d00, #ffd700, #ff4d00);
-  border-radius: 1px 1px 0 0;
-  position: relative;
-  margin-bottom: -6px; 
-  z-index: 2;
-}
-
-.candle::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 4px;
-  background: #222;
-}
-
-/* Delicate, beautifully proportioned flickering flame */
-.flame {
-  position: absolute;
-  top: -16px;
-  width: 10px;
-  height: 16px;
-  background: radial-gradient(circle at 50% 80%, #fff 20%, #ffb703 60%, #ff4d00 90%, transparent);
-  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
-  box-shadow: 0 0 10px #ffb703, 
-              0 0 20px #ff4d00;
-  animation: flicker 0.1s infinite alternate, sway 1s ease-in-out infinite alternate;
-  z-index: 3;
-}
-
-@keyframes flicker {
-  0% { transform: scale(0.9) rotate(-1deg); opacity: 0.85; }
-  100% { transform: scale(1.1) rotate(1deg); opacity: 1; }
-}
-
-@keyframes sway {
-  0% { margin-left: -1px; }
-  100% { margin-left: 1px; }
-}
-
-.message{
-max-width:700px;
-margin:30px auto;
-padding:35px;
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(15px);
-border-radius:25px;
-border:1px solid rgba(255,255,255,.2);
-box-shadow:0 15px 35px rgba(0,0,0,.35);
-line-height:2;
-font-size:20px;
-}
-
-.gallery{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:12px;
-margin-top:20px;
-}
-
-.gallery img {
-width:45%;
-max-width:180px;
-aspect-ratio:2/3;
-object-fit:cover;
-border-radius:15px;
-border:3px solid white;
-transition:.4s;
-cursor:pointer;
-}
-
-.gallery img:hover{
-transform:scale(1.08);
-box-shadow:0 0 25px white;
-}
-
-/* --- CLIPPING CONTAINERS FOR GALLERY --- */
-/* .gallery .girl-container {
-  width: 45%;
-  max-width: 180px;
-  aspect-ratio: 2/3;
-  overflow: hidden;
-  border-radius: 15px;
-  border: 3px solid white;
-  transition: .4s;
-  cursor: pointer;
-} */
-
-/* FIXED VISIBILITY: Perfectly shifts the view to frame the girl beautifully without over-zooming */
-/* .gallery .girl-container.crop-boy img {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 0;
-  transform: scale(1.65); 
-  transform-origin: 92% 38%;
-} */
-
-/* Tree image magnification zoom */
-/* .gallery .girl-container.zoom-tree img {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 0;
-  transform: scale(1.65);
-  transform-origin: center center;
-} */
-
-/* .gallery .girl-container:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 25px white;
-} */
-
-@media(max-width:600px){
-
-#birthdayPage h1{
-font-size:2rem;
-}
-
-.message{
-font-size:17px;
-padding:20px;
-}
-
-.gallery img {
-width:46%;
-}
-
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:linear-gradient(-45deg,#120024,#4a0072,#7b2cbf,#ff66c4);background-size:400% 400%;animation:bgMove 12s ease infinite;color:#fff;text-align:center;overflow-x:hidden;min-height:100vh}
+@keyframes bgMove{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+.stars{position:fixed;inset:0;background-image:radial-gradient(white 1px,transparent 1px);background-size:40px 40px;opacity:.3;z-index:-1}
+#welcome{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+#surpriseBtn{padding:18px 55px;font-size:24px;border:none;border-radius:50px;background:#ff66c4;color:#fff}
+#birthdayPage{display:none;padding:20px}
+.glow-text{font-size:2.4rem;background:linear-gradient(90deg,#ffd700,#ff66c4,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:textGlow 2s infinite alternate}
+@keyframes textGlow{from{filter:drop-shadow(0 0 8px gold)}to{filter:drop-shadow(0 0 24px hotpink)}}
+.main-photo{width:min(80vw,300px);height:min(80vw,300px);object-fit:cover;border-radius:50%;border:6px solid #fff}
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px}
+.gallery img{width:45%;max-width:180px;aspect-ratio:2/3;object-fit:cover;border-radius:15px;border:3px solid #fff}
+.message{max-width:700px;margin:20px auto;padding:20px;background:rgba(255,255,255,.15);border-radius:20px}
+#countdown{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);justify-content:center;align-items:center;font-size:120px;font-weight:bold;z-index:9999}
 </style>
 </head>
-
 <body>
-
 <div class="stars"></div>
-
-<audio id="music" loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-
+<audio id="music" loop><source src="music.mp3" type="audio/mpeg"></audio>
 <div id="welcome">
-
 <h1>❤️ Something Special Is Waiting For You ❤️</h1>
-
-<button id="surpriseBtn" onclick="startCountdown()">
-🎁 Press Me
-</button>
-
+<button id="surpriseBtn" onclick="startCountdown()">🎁 Press Me</button>
 </div>
-
 <div id="birthdayPage">
-
 <h1 class="glow-text">🎉 Happy Birthday Kana ❤️ 🎉</h1>
-
-<div class="cake-container">
-  <div class="flame"></div>
-  <div class="candle"></div>
-  <div class="cake-emoji">🎂</div>
-</div>
-
+<div style="font-size:60px">🎂</div>
 <img src="photo1.jpg" class="main-photo">
-
-<div class="message">
-
-<h2>💌 For Kana</h2>
-
-<p id="typing"></p>
-
-</div>
-
+<div class="message"><h2>💌 For Kana</h2><p id="typing"></p></div>
 <div class="gallery">
-
-<img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
-<img src="photo4.jpg">
-<img src="photo5.jpg">
-<img src="photo6.jpg">
-<img src="photo7.jpg">
-<img src="photo8.jpg">
-<img src="photo9.jpg">
-
-</div>
-
-<div id="countdown" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.9);
-color:white;
-font-size:90px;
-font-weight:bold;
-  text-align:center;
-z-index:9999;">
-3
+<img src="photo1.jpg"><img src="photo2.jpg"><img src="photo3.jpg">
+<img src="photo4.jpg"><img src="photo5.jpg"><img src="photo6.jpg">
+<img src="photo7.jpg"><img src="photo8.jpg"><img src="photo9.jpg">
 </div>
 </div>
-
+<div id="countdown">3</div>
 <script>
-
-const text = `Happy Birthday Kana ❤️
+const text=`Happy Birthday Kana ❤️
 
 May your day be filled with happiness, laughter, success and beautiful memories.
 
@@ -360,95 +54,22 @@ Keep smiling and shining always ✨
 
 With Love ❤️
 Kevin`;
-
-let i = 0;
-
-function typeWriter(){
-
-if(i < text.length){
-
-document.getElementById("typing").innerHTML += text.charAt(i);
-
-i++;
-
-setTimeout(typeWriter,40);
-
-}
-
-}
-
+let i=0;
+function typeWriter(){if(i<text.length){typing.innerHTML+=text.charAt(i);i++;setTimeout(typeWriter,40);}}
 function startCountdown(){
-
-const countdown = document.getElementById("countdown");
-
-countdown.style.display = "flex";
-countdown.style.justifyContent = "center";
-countdown.style.alignItems = "center";
-
-let numbers = ["3","2","1","🎉 Surprise!"];
-let index = 0;
-
-countdown.innerHTML = numbers[index];
-
-let timer = setInterval(() => {
-
-    index++;
-
-    if(index < numbers.length){
-        countdown.innerHTML = numbers[index];
-    }else{
-        clearInterval(timer);
-        countdown.style.display = "none";
-        showBirthday();
-    }
-
-},1000);
-
+const c=document.getElementById("countdown");
+c.style.display="flex";
+const n=["3","2","1","🎉 Surprise!"];let x=0;c.textContent=n[0];
+const t=setInterval(()=>{x++;if(x<n.length){c.textContent=n[x]}else{clearInterval(t);c.style.display="none";showBirthday()}},1000);
 }
-
 function showBirthday(){
-
-const music = document.getElementById("music");
-
 music.play().catch(()=>{});
-
-document.getElementById("welcome").style.display="none";
-
-document.getElementById("birthdayPage").style.display="block";
-
-document.getElementById("typing").innerHTML="";
-
-i=0;
-
-typeWriter();
-
-confetti({
-
-particleCount:250,
-
-spread:120,
-
-origin:{y:0.6}
-
-});
-
-setInterval(()=>{
-
-confetti({
-
-particleCount:100,
-
-spread:100,
-
-origin:{x:Math.random(),y:0.6}
-
-});
-
-},4000);
-
+welcome.style.display="none";
+birthdayPage.style.display="block";
+typing.innerHTML="";i=0;typeWriter();
+confetti({particleCount:250,spread:120,origin:{y:.6}});
+setInterval(()=>confetti({particleCount:100,spread:100,origin:{x:Math.random(),y:.6}}),4000);
 }
-
 </script>
-
 </body>
 </html>
