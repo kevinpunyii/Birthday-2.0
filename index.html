@@ -16,11 +16,20 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#120024,#2b004d,#4a0072);
-color:white;
-text-align:center;
-overflow-x:hidden;
-min-height:100vh;
+background:linear-gradient(-45deg,
+#120024,
+#4a0072,
+#7b2cbf,
+#ff66c4);
+
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 .stars{
@@ -74,30 +83,45 @@ padding:20px;
 }
 
 #birthdayPage h1{
-font-size:3rem;
-margin-top:20px;
-margin-bottom:20px;
+font-size:3.5rem;
+font-weight:bold;
+background:linear-gradient(90deg,#ffd700,#ff66c4,#ffffff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin:20px;
+text-shadow:0 0 25px rgba(255,255,255,.5);
 }
-
 .main-photo{
 width:300px;
 height:300px;
 object-fit:cover;
-border-radius:20px;
-border:5px solid white;
-box-shadow:0 0 25px rgba(255,255,255,.8);
+border-radius:50%;
+border:6px solid white;
+box-shadow:
+0 0 20px #fff,
+0 0 40px #ff66c4,
+0 0 70px #c084fc;
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
 }
 
 .message{
 max-width:700px;
-margin:25px auto;
-padding:20px;
-background:rgba(255,255,255,.15);
-border-radius:20px;
-line-height:1.8;
-font-size:18px;
+margin:30px auto;
+padding:35px;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.2);
+border-radius:25px;
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+line-height:2;
+font-size:20px;
 }
-
 .gallery{
 display:flex;
 flex-wrap:wrap;
@@ -107,13 +131,14 @@ margin-top:20px;
 }
 
 .gallery img{
-width:200px;
-height:300px;
-object-fit:cover;
-border-radius:15px;
-border:3px solid white;
+transition:.4s;
+cursor:pointer;
 }
 
+.gallery img:hover{
+transform:scale(1.08) rotate(2deg);
+box-shadow:0 0 25px white;
+}
 .cake{
 font-size:70px;
 margin:20px 0;
@@ -142,7 +167,7 @@ animation:bounce 1.5s infinite;
 
 <p>Something special is waiting for you ❤️</p>
 
-<button id="surpriseBtn" onclick="showBirthday()">
+<button id="surpriseBtn" onclick="startCountdown()">
 🎁 Press Me
 </button>
 
@@ -161,36 +186,9 @@ animation:bounce 1.5s infinite;
 
 <h2>💌 For Kana</h2>
 
-<br>
-
-Happy Birthday Kana ❤️
-
-<br><br>
-
-May your day be filled with happiness, laughter, success and beautiful memories.
-
-<br><br>
-
-May all your dreams come true and may this year bring you endless joy.
-
-<br><br>
-
-Thank you for being such a wonderful person.
-
-<br><br>
-
-Keep smiling and shining always ✨
-
-<br><br>
-
-With Love ❤️
-
-<br>
-
-Kevin
-
+<p id="typing"></p>
 </div>
-
+  
 <div class="gallery">
 <img src="photo1.jpg">
 <img src="photo2.jpg">
@@ -201,9 +199,73 @@ Kevin
 
 </div>
 
+  <div id="countdown" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+color:white;
+font-size:80px;
+font-weight:bold;
+justify-content:center;
+align-items:center;
+z-index:9999;">
+3
 </div>
 
 <script>
+  const text = `Happy Birthday Kana ❤️
+
+May your day be filled with happiness, laughter, success and beautiful memories.
+
+May all your dreams come true and may this year bring you endless joy.
+
+Thank you for being such a wonderful person.
+
+Keep smiling and shining always ✨
+
+With Love ❤️
+Kevin`;
+
+let i = 0;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+  function startCountdown(){
+
+const countdown = document.getElementById("countdown");
+
+countdown.style.display = "flex";
+
+let numbers = ["3","2","1","🎉 Surprise!"];
+let i = 0;
+
+countdown.innerHTML = numbers[i];
+
+let timer = setInterval(()=>{
+
+i++;
+
+if(i < numbers.length){
+countdown.innerHTML = numbers[i];
+}else{
+clearInterval(timer);
+countdown.style.display = "none";
+showBirthday();
+}
+
+},1000);
+
+}
 
 function showBirthday(){
 
@@ -211,27 +273,34 @@ const music = document.getElementById("music");
 
 music.play()
 .then(() => {
-console.log("Music started");
+    console.log("Music started");
 })
 .catch(err => {
-console.log("Music blocked", err);
+    console.log("Music blocked", err);
 });
 
-document.getElementById("welcome").style.display="none";
-document.getElementById("birthdayPage").style.display="block";
+document.getElementById("welcome").style.display = "none";
+document.getElementById("birthdayPage").style.display = "block";
 
+// Start typing animation
+document.getElementById("typing").innerHTML = "";
+i = 0;
+typeWriter();
+
+// First confetti burst
 confetti({
-particleCount:250,
-spread:120,
-origin:{y:0.6}
+    particleCount:250,
+    spread:120,
+    origin:{y:0.6}
 });
 
+// Continuous confetti
 setInterval(()=>{
-confetti({
-particleCount:100,
-spread:100,
-origin:{y:0.6}
-});
+    confetti({
+        particleCount:100,
+        spread:100,
+        origin:{y:0.6}
+    });
 },4000);
 
 }
