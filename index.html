@@ -32,21 +32,6 @@ min-height:100vh;
 100%{background-position:0% 50%;}
 }
 
-  @keyframes glow{
-0%{
-text-shadow:
-0 0 10px #ffd700,
-0 0 20px #ff66c4,
-0 0 30px #ffffff;
-}
-100%{
-text-shadow:
-0 0 20px #ffd700,
-0 0 40px #ff66c4,
-0 0 60px #ffffff;
-}
-}
-
 .stars{
 position:fixed;
 top:0;
@@ -95,12 +80,25 @@ display:none;
 padding:20px;
 }
 
-#birthdayPage h1{
-font-size:2.8rem;
-margin:20px;
-background:linear-gradient(90deg,#ffd700,#ff66c4,#fff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+/* --- FIXED TEXT GLOW EFFECT --- */
+.glow-text {
+  font-size: 2.8rem;
+  margin: 20px;
+  background: linear-gradient(90deg, #ffd700, #ff66c4, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)) 
+            drop-shadow(0 0 15px rgba(255, 102, 196, 0.5));
+  }
+  100% {
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)) 
+            drop-shadow(0 0 35px rgba(255, 102, 196, 0.8));
+  }
 }
 
 .main-photo{
@@ -121,63 +119,57 @@ animation:float 4s ease-in-out infinite;
 50%{transform:translateY(-15px);}
 }
 
-.cake{
-width:180px;
-height:90px;
-margin:30px auto;
-background:linear-gradient(#ffb347,#ff7b7b);
-border-radius:10px 10px 20px 20px;
-position:relative;
-box-shadow:0 0 20px rgba(255,180,100,.5);
+/* --- NEW REALISTIC CANDLE SYSTEM (Orange Box Completely Removed) --- */
+.cake-container {
+  position: relative;
+  width: 100px;
+  margin: 30px auto 25px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.cake::before{
-content:"";
-position:absolute;
-top:-12px;
-left:0;
-width:100%;
-height:12px;
-background:#fff;
-border-radius:10px;
+.candle {
+  width: 12px;
+  height: 50px;
+  background: linear-gradient(to right, #e63946, #ffb703, #e63946);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.candle{
-position:absolute;
-top:-55px;
-left:50%;
-transform:translateX(-50%);
-width:12px;
-height:55px;
-background:#ffffff;
-border-radius:6px;
+.candle::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 6px;
+  background: #333;
 }
 
-.flame{
-position:absolute;
-top:-22px;
-left:50%;
-transform:translateX(-50%);
-width:18px;
-height:28px;
-background:gold;
-border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
-box-shadow:
-0 0 15px yellow,
-0 0 30px orange,
-0 0 50px red;
-animation:flicker .15s infinite alternate;
+.flame {
+  position: absolute;
+  top: -34px;
+  width: 18px;
+  height: 28px;
+  background: radial-gradient(circle at 50% 80%, #fff 10%, #ffb703 40%, #ff4d00 80%, transparent);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  box-shadow: 0 0 20px #ffb703, 
+              0 0 40px #ff4d00, 
+              -4px -4px 15px rgba(255, 255, 255, 0.5);
+  animation: floatFlame 0.15s infinite alternate, sideSway 1.5s ease-in-out infinite alternate;
 }
 
-@keyframes flicker{
-0%{
-transform:translateX(-50%) scale(1) rotate(-3deg);
-opacity:1;
+@keyframes floatFlame {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1) translateY(-1px); }
 }
-100%{
-transform:translateX(-50%) scale(1.15) rotate(3deg);
-opacity:.85;
-}
+
+@keyframes sideSway {
+  0% { margin-left: -1px; transform: rotate(-2deg); }
+  100% { margin-left: 1px; transform: rotate(2deg); }
 }
 
 .message{
@@ -201,7 +193,7 @@ gap:12px;
 margin-top:20px;
 }
 
-.gallery img{
+.gallery img {
 width:45%;
 max-width:180px;
 aspect-ratio:2/3;
@@ -217,35 +209,8 @@ transform:scale(1.08);
 box-shadow:0 0 25px white;
 }
 
-/* --- NEW SECTIONS FOR TARGETED IMAGES --- */
-
-/* Shifts photo 7 and 8 right to focus only on the girl */
-.gallery img.girl-right {
-  object-position: 85% center;
-}
-
-/* Zooms inside photo 9 to show the girl closer up */
-/* We scale up the image and wrap it smoothly without breaking your hover transition */
-.gallery img.girl-zoom {
-  object-scale-up: 1.6; /* Fallback conceptually */
-  transform: scale(1); 
-}
-.gallery img.girl-zoom {
-  object-fit: cover;
-  /* Simulates a close-up crop inside the 2:3 aspect ratio aspect frame */
-  transform-origin: center center;
-}
-
-/* Adjusts scale dynamically so it works together with your hover effect */
-.gallery img.girl-zoom {
-  width: 45%;
-  max-width: 180px;
-  height: auto;
-  aspect-ratio: 2/3;
-}
-
-/* Trick to zoom into the image natively without overflow spilling */
-.gallery .zoom-container {
+/* --- CONTAINERS TO HIDE THE BOY & ZOOM ON THE GIRL --- */
+.gallery .girl-container {
   width: 45%;
   max-width: 180px;
   aspect-ratio: 2/3;
@@ -255,17 +220,28 @@ box-shadow:0 0 25px white;
   transition: .4s;
   cursor: pointer;
 }
-.gallery .zoom-container img {
+
+/* Zooming and pushing left side completely out of view for photos 7 & 8 */
+.gallery .girl-container.crop-boy img {
   width: 100%;
   height: 100%;
   border: none;
   border-radius: 0;
-  transform: scale(1.6); /* Zooms into photo 9 */
-  transform-origin: center center;
-  transition: .4s;
+  transform: scale(1.55); 
+  transform-origin: right center; /* Shifts frame entirely to the right girl */
 }
-/* Keeps your global hover animation intact for the zoom container */
-.gallery .zoom-container:hover {
+
+/* High-magnification zoom for photo 9 (the tree photo) */
+.gallery .girl-container.zoom-tree img {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  transform: scale(1.65);
+  transform-origin: center center;
+}
+
+.gallery .girl-container:hover {
   transform: scale(1.08);
   box-shadow: 0 0 25px white;
 }
@@ -281,7 +257,7 @@ font-size:17px;
 padding:20px;
 }
 
-.gallery img, .gallery .zoom-container {
+.gallery img, .gallery .girl-container {
 width:46%;
 }
 
@@ -310,9 +286,12 @@ width:46%;
 
 <div id="birthdayPage">
 
-<h1>🎉 Happy Birthday Kana ❤️ 🎉</h1>
+<h1 class="glow-text">🎉 Happy Birthday Kana ❤️ 🎉</h1>
 
-<div class="cake">🎂</div>
+<div class="cake-container">
+  <div class="flame"></div>
+  <div class="candle"></div>
+</div>
 
 <img src="photo1.jpg" class="main-photo">
 
@@ -332,9 +311,16 @@ width:46%;
 <img src="photo4.jpg">
 <img src="photo5.jpg">
 <img src="photo6.jpg">
-<img src="photo7.jpg" class="girl-right">
-<img src="photo8.jpg" class="girl-right">
-<div class="zoom-container">
+
+<div class="girl-container crop-boy">
+  <img src="photo7.jpg">
+</div>
+
+<div class="girl-container crop-boy">
+  <img src="photo8.jpg">
+</div>
+
+<div class="girl-container zoom-tree">
   <img src="photo9.jpg">
 </div>
 
