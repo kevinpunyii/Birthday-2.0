@@ -233,10 +233,11 @@ background:rgba(0,0,0,.9);
 color:white;
 font-size:90px;
 font-weight:bold;
-justify-content:center;
-align-items:center;
-z-index:9999;
-text-shadow:0 0 25px #fff;">
+  text-align:center;
+/* justify-content:center; */
+/* align-items:center; */
+z-index:9999;">
+<!-- /* text-shadow:0 0 25px #fff; -->
 3
 </div>
 
@@ -276,30 +277,25 @@ function startCountdown(){
 const countdown = document.getElementById("countdown");
 
 countdown.style.display = "flex";
+countdown.style.justifyContent = "center";
+countdown.style.alignItems = "center";
 
 let numbers = ["3","2","1","🎉 Surprise!"];
-
 let index = 0;
 
 countdown.innerHTML = numbers[index];
 
-let timer = setInterval(()=>{
+let timer = setInterval(() => {
 
-index++;
+    index++;
 
-if(index < numbers.length){
-
-countdown.innerHTML = numbers[index];
-
-}else{
-
-clearInterval(timer);
-
-countdown.style.display = "none";
-
-showBirthday();
-
-}
+    if(index < numbers.length){
+        countdown.innerHTML = numbers[index];
+    }else{
+        clearInterval(timer);
+        countdown.style.display = "none";
+        showBirthday();
+    }
 
 },1000);
 
