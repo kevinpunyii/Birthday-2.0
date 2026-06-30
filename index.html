@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -16,14 +17,13 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:linear-gradient(-45deg,
-#120024,
-#4a0072,
-#7b2cbf,
-#ff66c4);
-
+background:linear-gradient(-45deg,#120024,#4a0072,#7b2cbf,#ff66c4);
 background-size:400% 400%;
 animation:bgMove 12s ease infinite;
+color:white;
+text-align:center;
+overflow-x:hidden;
+min-height:100vh;
 }
 
 @keyframes bgMove{
@@ -38,8 +38,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background-image:
-radial-gradient(white 1px, transparent 1px);
+background-image:radial-gradient(white 1px,transparent 1px);
 background-size:40px 40px;
 opacity:.3;
 z-index:-1;
@@ -55,15 +54,9 @@ padding:20px;
 }
 
 #welcome h1{
-font-size:3rem;
+font-size:2.6rem;
 color:#ffd6f5;
-margin-bottom:15px;
-}
-
-#welcome p{
-font-size:1.2rem;
-color:#ddd;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 #surpriseBtn{
@@ -75,6 +68,11 @@ cursor:pointer;
 background:linear-gradient(45deg,#ff66c4,#c084fc);
 color:white;
 box-shadow:0 0 25px rgba(255,255,255,.6);
+transition:.3s;
+}
+
+#surpriseBtn:hover{
+transform:scale(1.08);
 }
 
 #birthdayPage{
@@ -83,17 +81,16 @@ padding:20px;
 }
 
 #birthdayPage h1{
-font-size:3.5rem;
-font-weight:bold;
-background:linear-gradient(90deg,#ffd700,#ff66c4,#ffffff);
+font-size:2.8rem;
+margin:20px;
+background:linear-gradient(90deg,#ffd700,#ff66c4,#fff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-margin:20px;
-text-shadow:0 0 25px rgba(255,255,255,.5);
 }
+
 .main-photo{
-width:300px;
-height:300px;
+width:min(80vw,300px);
+height:min(80vw,300px);
 object-fit:cover;
 border-radius:50%;
 border:6px solid white;
@@ -109,36 +106,6 @@ animation:float 4s ease-in-out infinite;
 50%{transform:translateY(-15px);}
 }
 
-.message{
-max-width:700px;
-margin:30px auto;
-padding:35px;
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
-border:1px solid rgba(255,255,255,.2);
-border-radius:25px;
-box-shadow:0 15px 35px rgba(0,0,0,.35);
-line-height:2;
-font-size:20px;
-}
-.gallery{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-margin-top:20px;
-}
-
-.gallery img{
-transition:.4s;
-cursor:pointer;
-}
-
-.gallery img:hover{
-transform:scale(1.08) rotate(2deg);
-box-shadow:0 0 25px white;
-}
 .cake{
 font-size:70px;
 margin:20px 0;
@@ -149,6 +116,61 @@ animation:bounce 1.5s infinite;
 0%,100%{transform:translateY(0);}
 50%{transform:translateY(-15px);}
 }
+
+.message{
+max-width:700px;
+margin:30px auto;
+padding:35px;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+border-radius:25px;
+border:1px solid rgba(255,255,255,.2);
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+line-height:2;
+font-size:20px;
+}
+
+.gallery{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+margin-top:20px;
+}
+
+.gallery img{
+width:45%;
+max-width:180px;
+aspect-ratio:2/3;
+object-fit:cover;
+border-radius:15px;
+border:3px solid white;
+transition:.4s;
+cursor:pointer;
+}
+
+.gallery img:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px white;
+}
+
+@media(max-width:600px){
+
+#birthdayPage h1{
+font-size:2rem;
+}
+
+.message{
+font-size:17px;
+padding:20px;
+}
+
+.gallery img{
+width:46%;
+}
+
+}
+
 </style>
 </head>
 
@@ -160,7 +182,6 @@ animation:bounce 1.5s infinite;
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Welcome Screen -->
 <div id="welcome">
 
 <h1>❤️ Something Special Is Waiting For You ❤️</h1>
@@ -171,7 +192,6 @@ animation:bounce 1.5s infinite;
 
 </div>
 
-<!-- Birthday Screen -->
 <div id="birthdayPage">
 
 <h1>🎉 Happy Birthday Kana ❤️ 🎉</h1>
@@ -185,9 +205,11 @@ animation:bounce 1.5s infinite;
 <h2>💌 For Kana</h2>
 
 <p id="typing"></p>
+
 </div>
-  
+
 <div class="gallery">
+
 <img src="photo1.jpg">
 <img src="photo2.jpg">
 <img src="photo3.jpg">
@@ -195,27 +217,32 @@ animation:bounce 1.5s infinite;
 <img src="photo5.jpg">
 <img src="photo6.jpg">
 
+  </div>
+
 </div>
 
-  <div id="countdown" style="
+<!-- Countdown Overlay -->
+<div id="countdown" style="
 display:none;
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.85);
+background:rgba(0,0,0,.9);
 color:white;
-font-size:80px;
+font-size:90px;
 font-weight:bold;
 justify-content:center;
 align-items:center;
-z-index:9999;">
+z-index:9999;
+text-shadow:0 0 25px #fff;">
 3
 </div>
 
 <script>
-  const text = `Happy Birthday Kana ❤️
+
+const text = `Happy Birthday Kana ❤️
 
 May your day be filled with happiness, laughter, success and beautiful memories.
 
@@ -230,35 +257,48 @@ Kevin`;
 
 let i = 0;
 
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 40);
-    }
+function typeWriter(){
+
+if(i < text.length){
+
+document.getElementById("typing").innerHTML += text.charAt(i);
+
+i++;
+
+setTimeout(typeWriter,40);
+
 }
 
-  function startCountdown(){
+}
+
+function startCountdown(){
 
 const countdown = document.getElementById("countdown");
 
 countdown.style.display = "flex";
 
 let numbers = ["3","2","1","🎉 Surprise!"];
-let i = 0;
 
-countdown.innerHTML = numbers[i];
+let index = 0;
+
+countdown.innerHTML = numbers[index];
 
 let timer = setInterval(()=>{
 
-i++;
+index++;
 
-if(i < numbers.length){
-countdown.innerHTML = numbers[i];
+if(index < numbers.length){
+
+countdown.innerHTML = numbers[index];
+
 }else{
+
 clearInterval(timer);
+
 countdown.style.display = "none";
+
 showBirthday();
+
 }
 
 },1000);
@@ -269,36 +309,40 @@ function showBirthday(){
 
 const music = document.getElementById("music");
 
-music.play()
-.then(() => {
-    console.log("Music started");
-})
-.catch(err => {
-    console.log("Music blocked", err);
-});
+music.play().catch(()=>{});
 
-document.getElementById("welcome").style.display = "none";
-document.getElementById("birthdayPage").style.display = "block";
+document.getElementById("welcome").style.display="none";
 
-// Start typing animation
-document.getElementById("typing").innerHTML = "";
-i = 0;
+document.getElementById("birthdayPage").style.display="block";
+
+document.getElementById("typing").innerHTML="";
+
+i=0;
+
 typeWriter();
 
-// First confetti burst
 confetti({
-    particleCount:250,
-    spread:120,
-    origin:{y:0.6}
+
+particleCount:250,
+
+spread:120,
+
+origin:{y:0.6}
+
 });
 
-// Continuous confetti
 setInterval(()=>{
-    confetti({
-        particleCount:100,
-        spread:100,
-        origin:{y:0.6}
-    });
+
+confetti({
+
+particleCount:100,
+
+spread:100,
+
+origin:{x:Math.random(),y:0.6}
+
+});
+
 },4000);
 
 }
